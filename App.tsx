@@ -1,16 +1,14 @@
-
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { DataProvider } from './context/DataContext';
-
-import LoginPage from './pages/LoginPage';
-import GiveKudosPage from './pages/GiveKudosPage';
-import MyKudosPage from './pages/MyKudosPage';
-import LeaderboardPage from './pages/LeaderboardPage';
-import AdminDashboardPage from './pages/AdminDashboardPage';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
+import { AuthProvider, useAuth } from './AuthContext';
+import { DataProvider } from './DataContext';
+import LoginPage from './LoginPage';
+import GiveKudosPage from './GiveKudosPage';
+import MyKudosPage from './MyKudosPage';
+import LeaderboardPage from './LeaderboardPage';
+import AdminDashboardPage from './AdminDashboardPage';
+import Sidebar from './Sidebar';
+import Header from './Header';
 import { Role } from './types';
 
 const App: React.FC = () => {
