@@ -1,7 +1,6 @@
-
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { User, Team, Kudos, KudosType, Role } from '../types';
-import { users as initialUsers, teams as initialTeams, kudos as initialKudos } from '../data';
+import { User, Team, Kudos, KudosType, Role } from './types';
+import { users as initialUsers, teams as initialTeams, kudos as initialKudos } from './data';
 import { useAuth } from './AuthContext';
 
 interface DataContextType {
@@ -45,16 +44,12 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const getKudosLimits = (userId: string) => {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-
     const currentUser = users.find(u => u.id === userId);
-
     const givenKudosThisMonth = kudos.filter(
       k => k.senderId === userId && new Date(k.timestamp) >= startOfMonth
     );
-
     const silverGiven = givenKudosThisMonth.filter(k => k.type === KudosType.Silver).length;
     const goldGiven = givenKudosThisMonth.filter(k => k.type === KudosType.Gold).length;
-
     const silverLimit = 2;
     
     let goldLimit = 0;
