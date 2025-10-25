@@ -1,20 +1,16 @@
-
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { users } from '../data';
-import Logo from '../components/Logo';
-
+import { useAuth } from './AuthContext';
+import { users } from './data';
+import Logo from './Logo';
 const LoginPage: React.FC = () => {
   const [selectedUserId, setSelectedUserId] = useState<string>(users[0]?.id || '');
   const { login } = useAuth();
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedUserId) {
       login(selectedUserId);
     }
   };
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl p-8 space-y-8">
@@ -29,7 +25,7 @@ const LoginPage: React.FC = () => {
         </p>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div>
-            <label htmlFor="user-select" className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="user-select">
               Select User Profile
             </label>
             <select
@@ -46,7 +42,6 @@ const LoginPage: React.FC = () => {
               ))}
             </select>
           </div>
-
           <div>
             <button
               type="submit"
@@ -60,5 +55,4 @@ const LoginPage: React.FC = () => {
     </div>
   );
 };
-
 export default LoginPage;
