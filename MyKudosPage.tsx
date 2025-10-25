@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
-import KudosCard from '../components/KudosCard';
+import { useAuth } from './AuthContext';
+import { useData } from './DataContext';
+import KudosCard from './KudosCard';
 
 type Tab = 'received' | 'given';
 
@@ -12,6 +12,7 @@ const MyKudosPage: React.FC = () => {
 
   const filteredKudos = useMemo(() => {
     if (!user) return [];
+
     if (activeTab === 'received') {
       return kudos.filter(k => k.receiverId === user.id);
     }
@@ -22,7 +23,6 @@ const MyKudosPage: React.FC = () => {
     `px-4 py-2 font-semibold rounded-md transition-colors duration-200 ${
         activeTab === tabName ? 'bg-teal-600 text-white' : 'text-gray-600 hover:bg-gray-200'
     }`;
-
 
   return (
     <div className="max-w-4xl mx-auto">
