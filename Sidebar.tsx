@@ -1,25 +1,21 @@
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Logo from './Logo';
-import HomeIcon from './icons/HomeIcon';
-import GiftIcon from './icons/GiftIcon';
-import TrophyIcon from './icons/TrophyIcon';
-import ShieldCheckIcon from './icons/ShieldCheckIcon';
-import UserCircleIcon from './icons/UserCircleIcon';
-import { useAuth } from '../context/AuthContext';
-import { Role } from '../types';
-
+import HomeIcon from './HomeIcon';
+import GiftIcon from './GiftIcon';
+import TrophyIcon from './TrophyIcon';
+import ShieldCheckIcon from './ShieldCheckIcon';
+import UserCircleIcon from './UserCircleIcon';
+import { useAuth } from './AuthContext';
+import { Role } from './types';
 const Sidebar: React.FC = () => {
   const { user } = useAuth();
-
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
       isActive
         ? 'bg-teal-600 text-white'
         : 'text-gray-300 hover:bg-gray-700 hover:text-white'
     }`;
-
   return (
     <div className="w-64 bg-gray-800 text-white flex flex-col h-full">
       <div className="p-4 border-b border-gray-700">
@@ -46,10 +42,9 @@ const Sidebar: React.FC = () => {
         )}
       </nav>
       <div className="p-4 border-t border-gray-700 mt-auto">
-        <p className="text-xs text-gray-400">&copy; 2024 EC Group Datasoft</p>
+        <p className="text-xs text-gray-400">© 2024 EC Group Datasoft</p>
       </div>
     </div>
   );
 };
-
 export default Sidebar;
