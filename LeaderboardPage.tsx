@@ -1,36 +1,30 @@
 import React, { useMemo, useState } from 'react';
-import { useData } from '../context/DataContext';
-import { User, Kudos, Team, KudosType } from '../types';
-import KudosCard from '../components/KudosCard';
-import TrophyIcon from '../components/icons/TrophyIcon';
-
+import { useData } from './DataContext';
+import { User, Kudos, Team, KudosType } from './types';
+import KudosCard from './KudosCard';
+import TrophyIcon from './TrophyIcon';
 interface LeaderboardEntry {
   user: User;
   kudosCount: number;
   goldCount: number;
   silverCount: number;
 }
-
 const LeaderboardPage: React.FC = () => {
   const { users, kudos, teams } = useData();
   const [selectedTeam, setSelectedTeam] = useState<string>('all');
-
   const kudosThisMonth = useMemo(() => {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     return kudos.filter(k => new Date(k.timestamp) >= startOfMonth);
   }, [kudos]);
-
   const leaderboardData = useMemo(() => {
     const kudosCounts = new Map<string, { gold: number; silver: number }>();
-
     const filteredKudos = selectedTeam === 'all'
       ? kudosThisMonth
       : kudosThisMonth.filter(k => {
           const receiver = users.find(u => u.id === k.receiverId);
           return receiver?.teamId === selectedTeam;
         });
-
     filteredKudos.forEach(k => {
       const counts = kudosCounts.get(k.receiverId) || { gold: 0, silver: 0 };
       if (k.type === KudosType.Gold) {
@@ -40,7 +34,6 @@ const LeaderboardPage: React.FC = () => {
       }
       kudosCounts.set(k.receiverId, counts);
     });
-
     const data: LeaderboardEntry[] = Array.from(kudosCounts.entries())
       .map(([userId, counts]) => {
         const user = users.find(u => u.id === userId);
@@ -53,25 +46,22 @@ const LeaderboardPage: React.FC = () => {
       })
       .filter((entry): entry is LeaderboardEntry => entry !== null)
       .sort((a, b) => b.kudosCount - a.kudosCount || b.goldCount - a.goldCount);
-
     return data;
   }, [kudosThisMonth, users, selectedTeam]);
   
   const employeeOfTheMonth = leaderboardData.length > 0 ? leaderboardData[0] : null;
-
   const recentKudos = [...kudosThisMonth].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).slice(0, 5);
   
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <h2 className="text-3xl font-bold text-gray-800">Monthly Leaderboard</h2>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-semibold text-gray-700">Top Kudos Receivers</h3>
             <div className="flex items-center space-x-2">
-              <label htmlFor="team-filter" className="text-sm font-medium text-gray-600">Filter by team:</label>
+              <label className="text-sm font-medium text-gray-600" htmlFor="team-filter">Filter by team:</label>
               <select
                 id="team-filter"
                 value={selectedTeam}
@@ -86,8 +76,8 @@ const LeaderboardPage: React.FC = () => {
           
           <div className="space-y-3">
             {leaderboardData.length > 0 ? leaderboardData.slice(0, 10).map((entry, index) => (
-              <div key={entry.user.id} className={`p-4 rounded-lg flex items-center space-x-4 ${index === 0 ? 'bg-teal-50 border-2 border-teal-500' : 'bg-gray-50'}`}>
-                <span className={`text-xl font-bold w-8 text-center ${index < 3 ? 'text-teal-600' : 'text-gray-500'}`}>{index + 1}</span>
+              <div key={entry.user.id} className={`p-4 rounded-lg flex items-center space-x-4 ${index === 0 ? 'bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-teal-500' : 'bg-gray-50'}`}>
+                <span className={`w-8 text-center text-xl font-bold ${index === 0 ? 'text-teal-600' : 'text-gray-400'}`}>{index + 1}</span>
                 <img src={entry.user.avatar} alt={entry.user.name} className="w-12 h-12 rounded-full" />
                 <div className="flex-1">
                   <p className="font-semibold text-gray-800">{entry.user.name}</p>
@@ -101,7 +91,6 @@ const LeaderboardPage: React.FC = () => {
             )) : <p className="text-center text-gray-500 py-8">No kudos given this month yet.</p>}
           </div>
         </div>
-
         <div className="space-y-8">
           {employeeOfTheMonth && (
             <div className="bg-gradient-to-br from-teal-500 to-cyan-600 text-white p-6 rounded-xl shadow-lg text-center">
@@ -127,5 +116,4 @@ const LeaderboardPage: React.FC = () => {
     </div>
   );
 };
-
 export default LeaderboardPage;
