@@ -1,0 +1,5 @@
+{
+  "name": "EC Kudos – Employee Recognition Platform",
+  "description": "A complete employee recognition web app for EC Group Datasoft, where employees can give and receive “Kudos” (Silver and Gold) based on defined rules. The app includes login, kudos-giving workflows, leaderboards, and an admin dashboard.",
+  "requestFramePermissions": []
+}
