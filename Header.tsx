@@ -1,7 +1,6 @@
-
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
-import LogoutIcon from './icons/LogoutIcon';
+import { useAuth } from './AuthContext';
+import LogoutIcon from './LogoutIcon';
 
 const Header: React.FC = () => {
   const { user, logout } = useAuth();
